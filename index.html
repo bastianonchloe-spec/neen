@@ -20,7 +20,9 @@
       }
 
       body {
-        background-color: transparent;
+        background:
+          linear-gradient(rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.5)),
+          url("background.jpg") center/cover no-repeat;
         min-height: 100vh;
         display: flex;
         flex-direction: column;
@@ -28,16 +30,6 @@
         font-family: "Nunito Sans", sans-serif;
         position: relative;
         overflow-x: hidden;
-      }
-
-      body::before {
-        content: "";
-        position: fixed;
-        inset: 0;
-        z-index: -1;
-        background:
-          linear-gradient(rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.5)),
-          url("background.jpg") center/cover no-repeat;
       }
 
       /* BANNIÈRE */
