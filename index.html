@@ -104,6 +104,13 @@
       }
 
       .link-btn {
+        --btn-label-size: 0.65rem;
+        --btn-name-size: 1.25rem;
+        --btn-text-gap: 0.2rem;
+        --btn-text-height: calc(
+          var(--btn-label-size) + var(--btn-text-gap) +
+            var(--btn-name-size)
+        );
         display: flex;
         align-items: center;
         gap: 1rem;
@@ -126,55 +133,36 @@
       }
 
       .btn-spotify {
-        background: #f3a5bb;
+        background: #e77d1d;
       }
       .btn-apple {
-        background: #ffb900;
+        background: #add2ef;
       }
       .btn-deezer {
-        background: #add2ef;
-        position: relative;
-        cursor: not-allowed;
+        background: #ffb900;
       }
       .btn-deezer .btn-label,
       .btn-deezer .btn-name {
         color: #3a5079;
       }
-      .btn-deezer:hover {
-        transform: none;
-        opacity: 1;
-      }
-      .btn-deezer .coming-soon {
-        position: absolute;
-        top: 50%;
-        right: 1.4rem;
-        transform: translateY(-50%);
-        font-family: "Nunito Sans", sans-serif;
-        font-size: 0.65rem;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        font-weight: 600;
-        color: #3a5079;
-        background: rgba(255, 255, 255, 0.45);
-        padding: 0.3rem 0.6rem;
-        border-radius: 100px;
-      }
 
       .btn-icon {
-        width: 32px;
-        height: 32px;
+        width: var(--btn-text-height);
+        height: var(--btn-text-height);
         flex-shrink: 0;
       }
 
       .btn-text {
         display: flex;
         flex-direction: column;
-        gap: 1px;
+        gap: var(--btn-text-gap);
+        justify-content: center;
       }
 
       .btn-label {
         font-family: "Nunito Sans", sans-serif;
-        font-size: 0.65rem;
+        font-size: var(--btn-label-size);
+        line-height: 1;
         letter-spacing: 0.14em;
         text-transform: uppercase;
         font-weight: 300;
@@ -183,7 +171,8 @@
 
       .btn-name {
         font-family: "Nunito Sans", sans-serif;
-        font-size: 1.25rem;
+        font-size: var(--btn-name-size);
+        line-height: 1;
         font-weight: 600;
         letter-spacing: 0.01em;
       }
@@ -285,10 +274,14 @@
           </div>
         </a>
 
-        <span class="link-btn btn-deezer" aria-disabled="true">
+        <a
+          class="link-btn btn-deezer"
+          href="https://www.deezer.com/en/artist/389415161"
+          target="_blank"
+        >
           <svg
             class="btn-icon"
-            viewBox="0 0 24 24"
+            viewBox="0 4.16 24 15.59"
             xmlns="http://www.w3.org/2000/svg"
             fill="#3A5079"
           >
@@ -300,8 +293,7 @@
             <span class="btn-label">Écouter sur</span>
             <span class="btn-name">Deezer</span>
           </div>
-          <span class="coming-soon">Bientôt</span>
-        </span>
+        </a>
       </div>
 
       <div class="socials">
