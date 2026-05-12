@@ -65,11 +65,24 @@
 
       .banner-logo {
         position: absolute;
-        bottom: 0.5rem;
+        bottom: 2.2rem;
         left: 50%;
         transform: translateX(-50%);
         width: 225px;
         mix-blend-mode: screen;
+      }
+
+      .banner-quote {
+        position: absolute;
+        left: 1.5rem;
+        right: 1.5rem;
+        bottom: 1rem;
+        color: #ffffff;
+        font-size: 1rem;
+        font-weight: 700;
+        line-height: 1.35;
+        text-align: center;
+        text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
       }
 
       /* CONTENU */
@@ -208,6 +221,10 @@
         width: 100%;
         height: 100%;
       }
+      .social-icon.email-icon {
+        width: 32px;
+        height: 32px;
+      }
       .social-icon:hover {
         color: #3a5079;
         opacity: 0.7;
@@ -222,15 +239,11 @@
       <img class="banner-photo" src="banner.jpg" alt="neen" />
       <div class="banner-overlay"></div>
       <img class="banner-logo" src="logo.png" alt="neen" />
+      <div class="banner-quote">"I paint human quirks on watercolor landscapes."</div>
     </div>
 
     <!-- CONTENU -->
     <div class="card">
-      <div class="bio">
-        "I observe the living, their gestures, their silences, and transcribe
-        their quiet laws into songs."
-      </div>
-
       <div class="links">
         <a
           class="link-btn btn-spotify"
@@ -314,7 +327,7 @@
           </svg>
         </a>
         <a
-          class="social-icon"
+          class="social-icon email-icon"
           href="mailto:bastianon.chloe@gmail.com"
           aria-label="Email"
         >
