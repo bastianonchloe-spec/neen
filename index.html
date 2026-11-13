@@ -16,197 +16,323 @@
       }
 
       html {
-        background-color: #ffffff;
+        background-color: #f7f1ee;
       }
 
       body {
-        background:
-          linear-gradient(rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.34)),
-          url("background.jpg") center/cover no-repeat;
-        min-height: 100vh;
+        height: 100svh;
+        min-height: 100svh;
         display: flex;
         flex-direction: column;
         align-items: center;
         font-family: "Nunito Sans", sans-serif;
         position: relative;
-        overflow-x: hidden;
-      }
-
-      /* BANNIÈRE */
-      .banner {
-        position: relative;
-        width: calc(100% - 2rem);
-        max-width: 520px;
-        height: 360px;
         overflow: hidden;
-        flex-shrink: 0;
-        margin-top: 1.5rem;
-        border-radius: 28px;
       }
 
-      .banner-photo {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center 15%;
-        display: block;
-      }
-
-      .banner-overlay {
-        position: absolute;
+      /* FOND PEINTURE */
+      body::before {
+        content: "";
+        position: fixed;
         inset: 0;
-        background: linear-gradient(
-          to bottom,
-          rgba(58, 80, 121, 0.1) 0%,
-          rgba(58, 80, 121, 0.15) 50%,
-          rgba(58, 80, 121, 0.75) 100%
-        );
+        z-index: -1;
+        background: url("background.jpg") center/cover no-repeat;
       }
 
-      .banner-logo {
-        position: absolute;
-        bottom: 4.5rem;
-        left: 50%;
-        transform: translateX(-50%);
-        width: min(230px, 46%);
-        mix-blend-mode: screen;
+      /* LOGO + LIENS */
+      .hero {
+        position: relative;
+        width: 100%;
+        height: 100svh;
+        min-height: 100svh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: clamp(1rem, 2.5vh, 2rem);
+        overflow: hidden;
       }
 
-      .banner-quote {
-        position: absolute;
-        left: 1.5rem;
-        right: 1.5rem;
-        bottom: 1rem;
-        color: #ffffff;
-        font-size: 1rem;
-        font-weight: 700;
-        line-height: 1.35;
-        text-align: center;
-        text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
-      }
-
-      /* CONTENU */
-      .card {
+      .hero-inner {
         position: relative;
         z-index: 2;
-        width: 100%;
-        max-width: 600px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 1.75rem;
-        padding: 2rem 2rem 3rem;
+        gap: clamp(0.8rem, 2.2vh, 1.4rem);
       }
 
-      .bio {
-        font-family: "Nunito Sans", sans-serif;
-        font-size: 1.05rem;
-        font-weight: 600;
-        color: #3a5079;
-        text-align: center;
-        line-height: 1.6;
-        max-width: 520px;
+      .site-logo {
+        position: relative;
+        width: min(350px, 74vw);
+        height: auto;
+        display: block;
+        filter: drop-shadow(0 8px 16px rgba(70, 20, 45, 0.18));
       }
 
-      .links {
-        display: flex;
-        flex-direction: column;
-        gap: 0.85rem;
+      /* STICKERS */
+      .sticker {
+        position: absolute;
+        z-index: 1;
+        width: var(--w);
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        user-select: none;
+      }
+
+      .sticker img {
+        display: block;
         width: 100%;
-        max-width: 380px;
+        height: auto;
+        transform-origin: 50% 50%;
+        animation: sticker-sway var(--dur, 8s) ease-in-out infinite;
+        animation-delay: var(--delay, 0s);
+        filter: drop-shadow(0 7px 12px rgba(58, 80, 121, 0.2));
+        will-change: transform;
       }
 
-      .link-btn {
-        --btn-label-size: 0.65rem;
-        --btn-name-size: 1.25rem;
-        --btn-text-gap: 0.2rem;
-        --btn-text-height: calc(
-          var(--btn-label-size) + var(--btn-text-gap) +
-            var(--btn-name-size)
-        );
-        display: flex;
+      @keyframes sticker-sway {
+        0%,
+        100% {
+          transform: rotate(-30deg);
+        }
+        50% {
+          transform: rotate(30deg);
+        }
+      }
+
+      .sticker-heart-magenta {
+        left: 13%;
+        top: 16%;
+        --w: clamp(56px, 5vw, 76px);
+        --dur: 7.2s;
+        --delay: -1.1s;
+      }
+
+      .sticker-star-pink {
+        left: 30%;
+        top: 8%;
+        --w: clamp(62px, 6vw, 92px);
+        --dur: 8.6s;
+        --delay: -3.2s;
+      }
+
+      .sticker-dragonfly-pale {
+        left: 83%;
+        top: 14%;
+        --w: clamp(80px, 10vw, 145px);
+        --dur: 9.4s;
+        --delay: -2.4s;
+      }
+
+      .sticker-butterfly-green {
+        left: 5%;
+        top: 42%;
+        --w: clamp(92px, 11vw, 165px);
+        --dur: 10.2s;
+        --delay: -0.8s;
+      }
+
+      .sticker-star-gold {
+        left: 91%;
+        top: 40%;
+        --w: clamp(62px, 7vw, 100px);
+        --dur: 7.8s;
+        --delay: -4.1s;
+      }
+
+      .sticker-dragonfly-pink {
+        left: 92%;
+        top: 55%;
+        --w: clamp(76px, 8.5vw, 120px);
+        --dur: 8.9s;
+        --delay: -5s;
+      }
+
+      .sticker-heart-pink {
+        left: 18%;
+        top: 72%;
+        --w: clamp(80px, 9vw, 130px);
+        --dur: 9.8s;
+        --delay: -2s;
+      }
+
+      .sticker-flower-blue {
+        left: 85%;
+        top: 72%;
+        --w: clamp(72px, 8vw, 112px);
+        --dur: 7.5s;
+        --delay: -3.7s;
+      }
+
+      .sticker-butterfly-blue {
+        left: 34%;
+        top: 87%;
+        --w: clamp(60px, 6.5vw, 95px);
+        --dur: 8.2s;
+        --delay: -0.4s;
+      }
+
+      .sticker-butterfly-pink-green {
+        left: 62%;
+        top: 88%;
+        --w: clamp(80px, 9vw, 130px);
+        --dur: 10.8s;
+        --delay: -2.9s;
+      }
+
+      @media (max-width: 700px) {
+        .sticker-heart-magenta {
+          left: 10%;
+          top: 8%;
+          --w: 52px;
+        }
+
+        .sticker-star-pink {
+          left: 38%;
+          top: 6%;
+          --w: 54px;
+        }
+
+        .sticker-dragonfly-pale {
+          left: 84%;
+          top: 8%;
+          --w: 76px;
+        }
+
+        .sticker-butterfly-green {
+          left: 6%;
+          top: 18%;
+          --w: 64px;
+        }
+
+        .sticker-star-gold {
+          left: 92%;
+          top: 18%;
+          --w: 52px;
+        }
+
+        .sticker-dragonfly-pink {
+          left: 66%;
+          top: 14%;
+          --w: 64px;
+        }
+
+        .sticker-heart-pink {
+          left: 10%;
+          top: 84%;
+          --w: 64px;
+        }
+
+        .sticker-flower-blue {
+          left: 88%;
+          top: 84%;
+          --w: 56px;
+        }
+
+        .sticker-butterfly-blue {
+          left: 20%;
+          top: 92%;
+          --w: 54px;
+        }
+
+        .sticker-butterfly-pink-green {
+          left: 70%;
+          top: 93%;
+          --w: 66px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .sticker img {
+          animation: none;
+        }
+      }
+
+      /* ÉTIQUETTES PAPIER */
+      .labels {
+        width: min(384px, 56vw);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: clamp(0.4rem, 1vw, 0.8rem);
+        row-gap: clamp(0.6rem, 1.6vh, 1rem);
         align-items: center;
-        gap: 1rem;
-        padding: 1rem 1.4rem;
-        border-radius: 14px;
-        text-decoration: none;
+      }
+
+      .label-link {
+        display: block;
+        width: 100%;
+        max-width: 186px;
+        transform: rotate(var(--rot, 0deg)) scale(var(--scale, 1));
+        transform-origin: 50% 50%;
+        filter: drop-shadow(0 7px 11px rgba(45, 35, 45, 0.3));
         transition:
-          transform 0.18s ease,
-          opacity 0.18s ease,
-          box-shadow 0.18s ease;
-        cursor: pointer;
-        border: none;
-        box-shadow:
-          0 10px 18px rgba(58, 80, 121, 0.18),
-          0 2px 5px rgba(58, 80, 121, 0.12);
+          transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+          filter 0.28s ease;
+        -webkit-tap-highlight-color: transparent;
       }
 
-      .link-btn:hover {
-        transform: translateY(-2px);
-        opacity: 0.93;
-        box-shadow:
-          0 14px 24px rgba(58, 80, 121, 0.24),
-          0 4px 8px rgba(58, 80, 121, 0.16);
-      }
-      .link-btn:active {
-        transform: translateY(0px) scale(0.98);
-        box-shadow:
-          0 6px 12px rgba(58, 80, 121, 0.16),
-          0 1px 3px rgba(58, 80, 121, 0.12);
+      .label-link img {
+        display: block;
+        width: 100%;
+        height: auto;
+        pointer-events: none;
       }
 
-      .btn-spotify {
-        background: #e77d1d;
-      }
-      .btn-apple {
-        background: #c5335c;
-      }
-      .btn-deezer {
-        background: #ffb900;
-      }
-      .btn-youtube {
-        background: #8380d1;
-      }
-      .btn-icon {
-        width: var(--btn-text-height);
-        height: var(--btn-text-height);
-        flex-shrink: 0;
+      .label-link:hover {
+        transform: rotate(0deg) scale(calc(var(--scale, 1) * 1.045));
+        filter: drop-shadow(0 14px 20px rgba(45, 35, 45, 0.38));
       }
 
-      .btn-text {
-        display: flex;
-        flex-direction: column;
-        gap: var(--btn-text-gap);
-        justify-content: center;
+      .label-link:active {
+        transform: rotate(0deg) scale(calc(var(--scale, 1) * 0.985));
       }
 
-      .btn-label {
-        font-family: "Nunito Sans", sans-serif;
-        font-size: var(--btn-label-size);
-        line-height: 1;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        font-weight: 300;
-        opacity: 0.65;
+      .label-instagram {
+        --rot: -3deg;
+        justify-self: start;
+        grid-column: 1;
+        grid-row: 1;
       }
 
-      .btn-name {
-        font-family: "Nunito Sans", sans-serif;
-        font-size: var(--btn-name-size);
-        line-height: 1;
-        font-weight: 600;
-        letter-spacing: 0.01em;
+      .label-spotify {
+        --rot: 2.5deg;
+        justify-self: end;
+        grid-column: 2;
+        grid-row: 1;
+        margin-top: 0.6rem;
       }
 
-      .btn-spotify .btn-label,
-      .btn-spotify .btn-name,
-      .btn-apple .btn-label,
-      .btn-apple .btn-name,
-      .btn-deezer .btn-label,
-      .btn-deezer .btn-name,
-      .btn-youtube .btn-label,
-      .btn-youtube .btn-name {
-        color: #ffffff;
+      .label-youtube {
+        --rot: 1.8deg;
+        justify-self: center;
+        grid-column: 1;
+        grid-row: 2;
+        margin-left: 4%;
+      }
+
+      .label-apple-music {
+        --rot: -2deg;
+        --scale: 1.3;
+        justify-self: start;
+        grid-column: 1;
+        grid-row: 3;
+      }
+
+      .label-deezer {
+        --rot: 2.8deg;
+        justify-self: end;
+        grid-column: 2;
+        grid-row: 3;
+        margin-top: 0.5rem;
+      }
+
+      .label-mail {
+        --rot: -1.5deg;
+        justify-self: end;
+        grid-column: 2;
+        grid-row: 2;
+        margin-top: 0.6rem;
       }
 
       .socials {
@@ -214,15 +340,15 @@
         gap: 1.5rem;
         align-items: center;
         justify-content: center;
-        margin-top: 0.5rem;
       }
       .social-icon {
-        color: #3a5079;
+        color: #ad1457;
         width: 28px;
         height: 28px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.45));
         transition:
           color 0.18s ease,
           transform 0.18s ease;
@@ -236,157 +362,142 @@
         height: 32px;
       }
       .social-icon:hover {
-        color: #3a5079;
-        opacity: 0.7;
+        color: #8e0f46;
+        opacity: 0.8;
         transform: translateY(-2px);
       }
 
-      @media (max-width: 480px) {
-        .banner-logo {
-          bottom: 5.9rem;
+      @media (max-width: 700px) {
+        .labels {
+          column-gap: 0.5rem;
+          row-gap: 0.9rem;
         }
 
-        .banner-quote {
-          bottom: 1.15rem;
+        .label-spotify {
+          margin-top: 0.5rem;
+        }
+
+        .label-youtube {
+          margin-left: 3%;
+        }
+
+        .label-deezer {
+          margin-top: 0.4rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .hero {
+          padding: 1.25rem;
+        }
+
+        .site-logo {
+          width: min(300px, 82vw);
         }
       }
     </style>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
   </head>
   <body>
-    <!-- BANNIÈRE PHOTO + LOGO PAR DESSUS -->
-    <div class="banner">
-      <img class="banner-photo" src="banner.jpg" alt="neen" />
-      <div class="banner-overlay"></div>
-      <img class="banner-logo" src="logo.png" alt="neen" />
-      <div class="banner-quote"><strong>"Bound by predictable laws, the living remains infinitely complex and unpredictable."</strong></div>
-    </div>
-
-    <!-- CONTENU -->
-    <div class="card">
-      <div class="links">
-        <a
-          class="link-btn btn-spotify"
-          href="https://open.spotify.com/artist/1ocUpH21N3k8H60xNWJ0OX?si=JLG39TniQGWUm19swnYseQ"
-          target="_blank"
-        >
-          <svg
-            class="btn-icon"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="#ffffff"
+    <!-- LOGO -->
+    <header class="hero">
+      <span class="sticker sticker-heart-magenta" aria-hidden="true"><img src="stickers/coeur-magenta.png" alt="" /></span>
+      <span class="sticker sticker-star-pink" aria-hidden="true"><img src="stickers/etoile-rose.png" alt="" /></span>
+      <span class="sticker sticker-dragonfly-pale" aria-hidden="true"><img src="stickers/libellule-rose.png" alt="" /></span>
+      <span class="sticker sticker-butterfly-green" aria-hidden="true"><img src="stickers/papillon-vert.png" alt="" /></span>
+      <span class="sticker sticker-star-gold" aria-hidden="true"><img src="stickers/etoile-doree.png" alt="" /></span>
+      <span class="sticker sticker-dragonfly-pink" aria-hidden="true"><img src="stickers/libellule-papillon.png" alt="" /></span>
+      <span class="sticker sticker-heart-pink" aria-hidden="true"><img src="stickers/coeur-rose.png" alt="" /></span>
+      <span class="sticker sticker-flower-blue" aria-hidden="true"><img src="stickers/fleur-bleue.png" alt="" /></span>
+      <span class="sticker sticker-butterfly-blue" aria-hidden="true"><img src="stickers/papillon-bleu.png" alt="" /></span>
+      <span class="sticker sticker-butterfly-pink-green" aria-hidden="true"><img src="stickers/papillon-rose-vert.png" alt="" /></span>
+      <div class="hero-inner">
+        <img class="site-logo" src="logo-neen.webp" alt="neen" />
+        <div class="labels">
+          <a
+            class="label-link label-instagram"
+            href="https://www.instagram.com/chloe_bastianon/?hl=fr"
+            target="_blank"
+            rel="noopener"
+            aria-label="Instagram"
           >
-            <path
-              d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12C24 5.4 18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141 4.32-1.32 9.84-.6 13.561 1.68.42.3.6.84.18 1.141zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"
+            <img
+              src="labels/instagram.webp?v=3"
+              alt="Instagram"
+              decoding="async"
             />
-          </svg>
-          <div class="btn-text">
-            <span class="btn-label">Écouter sur</span>
-            <span class="btn-name">Spotify</span>
-          </div>
-        </a>
+          </a>
 
-        <a
-          class="link-btn btn-apple"
-          href="https://music.apple.com/fr/artist/neen/1894908742?l=en-GB"
-          target="_blank"
-        >
-          <svg
-            class="btn-icon"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="#ffffff"
+          <a
+            class="label-link label-spotify"
+            href="https://open.spotify.com/artist/1ocUpH21N3k8H60xNWJ0OX?si=JLG39TniQGWUm19swnYseQ"
+            target="_blank"
+            rel="noopener"
+            aria-label="Spotify"
           >
-            <path
-              d="M23.994 6.124a9.23 9.23 0 00-.24-2.19c-.317-1.31-1.062-2.31-2.18-3.043a5.022 5.022 0 00-1.877-.726 10.496 10.496 0 00-1.564-.15c-.04-.003-.083-.01-.124-.013H5.986c-.152.01-.303.017-.455.026-.747.043-1.49.123-2.193.4-1.336.53-2.3 1.452-2.865 2.78-.192.448-.292.925-.363 1.408-.056.392-.088.785-.1 1.18 0 .032-.007.062-.01.093v12.223c.01.14.017.283.027.424.05.815.154 1.624.497 2.373.65 1.42 1.738 2.353 3.234 2.801.42.127.856.187 1.293.228.555.053 1.11.06 1.667.06h11.03a12.5 12.5 0 001.57-.1c.822-.106 1.596-.35 2.295-.81a5.046 5.046 0 001.88-2.207c.186-.42.293-.87.37-1.324.113-.675.138-1.358.137-2.04-.002-3.8 0-7.595-.003-11.393zm-6.423 3.99v5.712c0 .417-.058.827-.244 1.206-.29.59-.76.962-1.388 1.14-.35.1-.706.157-1.07.173-.95.045-1.773-.6-1.943-1.536a1.88 1.88 0 011.038-2.022c.323-.16.67-.25 1.018-.324.378-.082.758-.153 1.134-.24.274-.063.457-.23.51-.516a.904.904 0 00.02-.193c0-1.815 0-3.63-.002-5.443a.725.725 0 00-.026-.185c-.04-.15-.15-.243-.304-.234-.16.01-.318.035-.475.066-.76.15-1.52.303-2.28.456l-2.325.47-1.374.278c-.016.003-.032.01-.048.013-.277.077-.377.203-.39.49-.002.042 0 .086 0 .13-.002 2.602 0 5.204-.003 7.805 0 .42-.047.836-.215 1.227-.278.64-.77 1.04-1.434 1.233-.35.1-.71.16-1.075.172-.96.036-1.755-.6-1.92-1.544-.14-.812.23-1.685 1.154-2.075.357-.15.73-.232 1.108-.31.287-.06.575-.116.86-.177.383-.083.583-.323.6-.714v-.15c0-2.96 0-5.922.002-8.882 0-.123.013-.25.042-.37.07-.285.273-.448.546-.518.255-.066.515-.112.774-.165.733-.15 1.466-.296 2.2-.444l2.27-.46c.67-.134 1.34-.27 2.01-.403.22-.043.442-.088.663-.106.31-.025.523.17.554.482.008.073.012.148.012.223.002 1.91.002 3.822 0 5.732z"
+            <img
+              src="labels/spotify.webp?v=3"
+              alt="Spotify"
+              decoding="async"
             />
-          </svg>
-          <div class="btn-text">
-            <span class="btn-label">Écouter sur</span>
-            <span class="btn-name">Apple Music</span>
-          </div>
-        </a>
+          </a>
 
-        <a
-          class="link-btn btn-deezer"
-          href="https://www.deezer.com/en/artist/389415161"
-          target="_blank"
-        >
-          <svg
-            class="btn-icon"
-            viewBox="0 4.16 24 15.59"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="#ffffff"
+          <a
+            class="label-link label-youtube"
+            href="https://youtu.be/-gjMbGog5sU?si=s8XahSGEcQchLH_8"
+            target="_blank"
+            rel="noopener"
+            aria-label="YouTube"
           >
-            <path
-              d="M18.81 4.16h4.94v2.7h-4.94zM18.81 7.38h4.94v2.7h-4.94zM18.81 10.6h4.94v2.7h-4.94zM18.81 13.83h4.94v2.7h-4.94zM18.81 17.05h4.94v2.7h-4.94zM12.54 13.83h4.94v2.7h-4.94zM12.54 17.05h4.94v2.7h-4.94zM6.26 17.05h4.94v2.7H6.26zM.25 17.05h4.94v2.7H.25zM6.26 13.83h4.94v2.7H6.26zM12.54 10.6h4.94v2.7h-4.94zM12.54 7.38h4.94v2.7h-4.94z"
+            <img
+              src="labels/youtube.webp?v=3"
+              alt="YouTube"
+              decoding="async"
             />
-          </svg>
-          <div class="btn-text">
-            <span class="btn-label">Écouter sur</span>
-            <span class="btn-name">Deezer</span>
-          </div>
-        </a>
+          </a>
 
-        <a
-          class="link-btn btn-youtube"
-          href="https://youtu.be/-gjMbGog5sU?si=s8XahSGEcQchLH_8"
-          target="_blank"
-          aria-label="Regarder sur YouTube"
-        >
-          <svg
-            class="btn-icon"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="#ffffff"
+          <a
+            class="label-link label-mail"
+            href="mailto:neen.musique@gmail.com"
+            aria-label="Email"
           >
-            <path
-              d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.016 3.016 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.016 3.016 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
+            <img
+              src="labels/mail.webp?v=3"
+              alt="Email"
+              decoding="async"
             />
-          </svg>
-          <div class="btn-text">
-            <span class="btn-label">Regarder sur</span>
-            <span class="btn-name">YouTube</span>
-          </div>
-        </a>
+          </a>
+
+          <a
+            class="label-link label-apple-music"
+            href="https://music.apple.com/fr/artist/neen/1894908742?l=en-GB"
+            target="_blank"
+            rel="noopener"
+            aria-label="Apple Music"
+          >
+            <img
+              src="labels/apple-music.webp?v=3"
+              alt="Apple Music"
+              decoding="async"
+            />
+          </a>
+
+          <a
+            class="label-link label-deezer"
+            href="https://www.deezer.com/en/artist/389415161"
+            target="_blank"
+            rel="noopener"
+            aria-label="Deezer"
+          >
+            <img
+              src="labels/deezer.webp?v=3"
+              alt="Deezer"
+              decoding="async"
+            />
+          </a>
+        </div>
+
       </div>
-
-      <div class="socials">
-        <a
-          class="social-icon"
-          href="https://www.instagram.com/neen.fm?igsh=MWg5M3ZpNDZ2NWRlOA%3D%3D&utm_source=qr"
-          target="_blank"
-          aria-label="Instagram"
-        >
-          <svg
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-          >
-            <path
-              d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
-            />
-          </svg>
-        </a>
-        <a
-          class="social-icon email-icon"
-          href="mailto:neen.musique@gmail.com"
-          aria-label="Email"
-        >
-          <svg
-            viewBox="2 4 20 16"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.6"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <rect x="3" y="5" width="18" height="14" rx="2" />
-            <path d="M3 7l9 6 9-6" />
-          </svg>
-        </a>
-      </div>
-    </div>
+    </header>
   </body>
 </html>
