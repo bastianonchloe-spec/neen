@@ -70,181 +70,335 @@
         filter: drop-shadow(0 8px 16px rgba(70, 20, 45, 0.18));
       }
 
-      /* STICKERS */
-      .sticker {
-        position: absolute;
+      /* LIBELLULES EN VOL */
+      .flyers {
+        position: fixed;
+        inset: 0;
         z-index: 1;
-        width: var(--w);
-        transform: translate(-50%, -50%);
         pointer-events: none;
-        user-select: none;
+        overflow: hidden;
       }
 
-      .sticker img {
+      .flyer {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: var(--w);
+        pointer-events: none;
+        user-select: none;
+        will-change: transform;
+      }
+
+      .flyer img {
         display: block;
         width: 100%;
         height: auto;
         transform-origin: 50% 50%;
-        animation: sticker-sway var(--dur, 8s) ease-in-out infinite;
-        animation-delay: var(--delay, 0s);
-        filter: drop-shadow(0 7px 12px rgba(58, 80, 121, 0.2));
+        filter: drop-shadow(0 10px 16px rgba(40, 30, 50, 0.24));
         will-change: transform;
       }
 
-      @keyframes sticker-sway {
-        0%,
-        100% {
-          transform: rotate(-30deg);
-        }
-        50% {
-          transform: rotate(30deg);
-        }
+      .flyer-a {
+        --w: clamp(90px, 10vw, 150px);
+        transform: translate3d(22vw, 26vh, 0) translate(-50%, -50%);
       }
 
-      .sticker-heart-magenta {
-        left: 13%;
-        top: 16%;
-        --w: clamp(56px, 5vw, 76px);
-        --dur: 7.2s;
-        --delay: -1.1s;
+      .flyer-c {
+        --w: clamp(70px, 7vw, 112px);
+        transform: translate3d(78vw, 72vh, 0) translate(-50%, -50%);
       }
 
-      .sticker-star-pink {
-        left: 30%;
-        top: 8%;
-        --w: clamp(62px, 6vw, 92px);
-        --dur: 8.6s;
-        --delay: -3.2s;
-      }
-
-      .sticker-dragonfly-pale {
-        left: 83%;
-        top: 14%;
-        --w: clamp(80px, 10vw, 145px);
-        --dur: 9.4s;
-        --delay: -2.4s;
-      }
-
-      .sticker-butterfly-green {
-        left: 5%;
-        top: 42%;
-        --w: clamp(92px, 11vw, 165px);
-        --dur: 10.2s;
-        --delay: -0.8s;
-      }
-
-      .sticker-star-gold {
-        left: 91%;
-        top: 40%;
-        --w: clamp(62px, 7vw, 100px);
-        --dur: 7.8s;
-        --delay: -4.1s;
-      }
-
-      .sticker-dragonfly-pink {
-        left: 92%;
-        top: 55%;
-        --w: clamp(76px, 8.5vw, 120px);
-        --dur: 8.9s;
-        --delay: -5s;
-      }
-
-      .sticker-heart-pink {
-        left: 18%;
-        top: 72%;
-        --w: clamp(80px, 9vw, 130px);
-        --dur: 9.8s;
-        --delay: -2s;
-      }
-
-      .sticker-flower-blue {
-        left: 85%;
-        top: 72%;
-        --w: clamp(72px, 8vw, 112px);
-        --dur: 7.5s;
-        --delay: -3.7s;
-      }
-
-      .sticker-butterfly-blue {
-        left: 34%;
-        top: 87%;
-        --w: clamp(60px, 6.5vw, 95px);
-        --dur: 8.2s;
-        --delay: -0.4s;
-      }
-
-      .sticker-butterfly-pink-green {
-        left: 62%;
-        top: 88%;
-        --w: clamp(80px, 9vw, 130px);
-        --dur: 10.8s;
-        --delay: -2.9s;
+      /* Coccinelle et scarabées : petits insectes, tailles relatives aux
+         libellules. Les deux scarabées ont exactement la taille de la
+         coccinelle. */
+      .flyer-h,
+      .flyer-k,
+      .flyer-l {
+        --w: clamp(22px, 2.5vw, 36px);
+        transform: translate3d(72vw, 62vh, 0) translate(-50%, -50%);
       }
 
       @media (max-width: 700px) {
-        .sticker-heart-magenta {
-          left: 10%;
-          top: 8%;
-          --w: 52px;
+        .flyer-a {
+          --w: clamp(64px, 15vw, 96px);
         }
 
-        .sticker-star-pink {
-          left: 38%;
-          top: 6%;
-          --w: 54px;
+        .flyer-c {
+          --w: clamp(52px, 12vw, 76px);
         }
 
-        .sticker-dragonfly-pale {
-          left: 84%;
-          top: 8%;
-          --w: 76px;
-        }
-
-        .sticker-butterfly-green {
-          left: 6%;
-          top: 18%;
-          --w: 64px;
-        }
-
-        .sticker-star-gold {
-          left: 92%;
-          top: 18%;
-          --w: 52px;
-        }
-
-        .sticker-dragonfly-pink {
-          left: 66%;
-          top: 14%;
-          --w: 64px;
-        }
-
-        .sticker-heart-pink {
-          left: 10%;
-          top: 84%;
-          --w: 64px;
-        }
-
-        .sticker-flower-blue {
-          left: 88%;
-          top: 84%;
-          --w: 56px;
-        }
-
-        .sticker-butterfly-blue {
-          left: 20%;
-          top: 92%;
-          --w: 54px;
-        }
-
-        .sticker-butterfly-pink-green {
-          left: 70%;
-          top: 93%;
-          --w: 66px;
+        .flyer-h,
+        .flyer-k,
+        .flyer-l {
+          --w: clamp(20px, 5vw, 30px);
         }
       }
 
+      /* STICKERS ÉPARPILLÉS */
+      .stickers {
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        overflow: hidden;
+      }
+
+      .sticker {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 0;
+        height: 0;
+        transform: rotate(var(--rot, 0deg));
+        transform-origin: 50% 50%;
+        filter: drop-shadow(0 4px 7px rgba(40, 30, 45, 0.2));
+        will-change: transform;
+        user-select: none;
+      }
+
+      .sticker-button,
+      .sticker-gem,
+      .sticker-spin,
+      .sticker-perle {
+        pointer-events: auto;
+      }
+
+      .sticker-button,
+      .sticker-spin,
+      .sticker-perle {
+        cursor: pointer;
+      }
+
+      /* Boutons : va-et-vient de ±40° autour de leur centre. */
+      @keyframes button-turn {
+        0% {
+          transform: rotate(var(--rot, 0deg));
+        }
+        28% {
+          transform: rotate(calc(var(--rot, 0deg) - 40deg));
+        }
+        68% {
+          transform: rotate(calc(var(--rot, 0deg) + 40deg));
+        }
+        100% {
+          transform: rotate(var(--rot, 0deg));
+        }
+      }
+
+      .sticker-button:hover {
+        animation: button-turn 0.85s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+      }
+
+      /* Gemmes : un tout petit éclat quand la souris passe dessus. */
+      @keyframes gem-shine {
+        0%,
+        100% {
+          filter: drop-shadow(0 4px 7px rgba(40, 30, 45, 0.2));
+        }
+        38% {
+          filter: brightness(1.24) saturate(1.15)
+            drop-shadow(0 0 8px rgba(255, 246, 214, 0.95))
+            drop-shadow(0 0 20px rgba(255, 190, 225, 0.75));
+        }
+        68% {
+          filter: brightness(1.08) drop-shadow(0 0 4px rgba(255, 246, 214, 0.6));
+        }
+      }
+
+      .sticker-gem:hover {
+        animation: gem-shine 0.9s ease-in-out;
+      }
+
+      /* Coquillages spirale : un tour complet dans le sens inverse. */
+      @keyframes sticker-spin-right {
+        from {
+          transform: rotate(var(--rot, 0deg));
+        }
+        to {
+          transform: rotate(calc(var(--rot, 0deg) + 360deg));
+        }
+      }
+
+      .sticker-spin:hover {
+        animation: sticker-spin-right 0.95s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+      }
+
+      /* Coquillage violet : s'ouvre vers le haut et laisse voir sa perle. */
+      .sticker-perle {
+        padding: 0;
+        border: 0;
+        background: none;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+      }
+
+      .perle-body,
+      .perle-lid {
+        position: absolute;
+        inset: 0;
+        display: block;
+      }
+
+      .sticker-perle img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+      }
+
+      .perle-body img {
+        clip-path: inset(47% 0 0 0);
+      }
+
+      .perle-lid img {
+        clip-path: inset(0 0 53% 0);
+        transform-origin: 88% 100%;
+        transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      .sticker-perle.is-open .perle-lid img {
+        transform: rotate(-34deg) translate(-2%, -2%);
+      }
+
+      .perle {
+        position: absolute;
+        left: 42%;
+        top: 49%;
+        width: 17%;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle at 32% 28%,
+          #fff6fa 0%,
+          #ffc3dc 32%,
+          #f08cb4 58%,
+          #c9507f 100%
+        );
+        box-shadow:
+          0 1px 3px rgba(90, 20, 60, 0.45),
+          inset -1px -2px 3px rgba(120, 0, 60, 0.35);
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.2);
+        transition:
+          transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.08s,
+          opacity 0.25s ease 0.1s;
+        pointer-events: none;
+      }
+
+      .sticker-perle.is-open .perle {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+
+      .sticker-perle:focus-visible {
+        outline: 2px solid rgba(255, 255, 255, 0.9);
+        outline-offset: 3px;
+        border-radius: 10px;
+      }
+
+      /* COQUILLAGES */
+      .coquillages {
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        overflow: hidden;
+        user-select: none;
+      }
+
+      .coquillage {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 0;
+        height: 0;
+        padding: 0;
+        border: 0;
+        background: none;
+        opacity: 0;
+        cursor: pointer;
+        pointer-events: auto;
+        transform: rotate(var(--rest, 0deg));
+        transform-origin: 50% 50%;
+        transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+      }
+
+      .coquillage.is-placed {
+        opacity: 1;
+      }
+
+      .coquillage img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        transform-origin: 50% 92%;
+        animation: coquillage-rock var(--dur, 7s) ease-in-out infinite;
+        animation-delay: var(--delay, 0s);
+        filter: drop-shadow(0 3px 4px rgba(28, 38, 28, 0.3));
+        will-change: transform;
+      }
+
+      .coquillage:hover {
+        transform: rotate(var(--rest, 0deg)) scale(1.08);
+      }
+
+      .coquillage:hover img {
+        filter: drop-shadow(0 6px 8px rgba(28, 38, 28, 0.34));
+      }
+
+      .coquillage[aria-pressed="true"] img {
+        filter: drop-shadow(0 0 7px rgba(255, 246, 214, 0.95))
+          drop-shadow(0 3px 4px rgba(28, 38, 28, 0.3));
+      }
+
+      .coquillage:active {
+        transform: rotate(var(--rest, 0deg)) scale(0.97);
+      }
+
+      .coquillage:focus-visible {
+        outline: 2px solid rgba(255, 255, 255, 0.9);
+        outline-offset: 3px;
+        border-radius: 12px;
+      }
+
+      /* Léger dandinement, comme un bigorneau qui bouge dans sa coquille. */
+      @keyframes coquillage-rock {
+        0%,
+        100% {
+          transform: rotate(calc(var(--rock, 3deg) * -1)) translateY(0);
+        }
+        32% {
+          transform: rotate(calc(var(--rock, 3deg) * 0.7)) translateY(-1.6px);
+        }
+        68% {
+          transform: rotate(calc(var(--rock, 3deg) * -0.35)) translateY(0.9px);
+        }
+      }
+
+      /* Nautile : tour complet dans le sens inverse au survol. */
+      @keyframes coquillage-spin-right {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .coquillage-nautile:hover img {
+        animation: coquillage-spin-right 0.95s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+        transform-origin: 50% 50%;
+      }
+
       @media (prefers-reduced-motion: reduce) {
-        .sticker img {
+        .coquillage img,
+        .sticker-button:hover,
+        .sticker-gem:hover,
+        .sticker-spin:hover,
+        .coquillage-nautile:hover img {
           animation: none;
         }
       }
@@ -401,16 +555,40 @@
   <body>
     <!-- LOGO -->
     <header class="hero">
-      <span class="sticker sticker-heart-magenta" aria-hidden="true"><img src="stickers/coeur-magenta.png" alt="" /></span>
-      <span class="sticker sticker-star-pink" aria-hidden="true"><img src="stickers/etoile-rose.png" alt="" /></span>
-      <span class="sticker sticker-dragonfly-pale" aria-hidden="true"><img src="stickers/libellule-rose.png" alt="" /></span>
-      <span class="sticker sticker-butterfly-green" aria-hidden="true"><img src="stickers/papillon-vert.png" alt="" /></span>
-      <span class="sticker sticker-star-gold" aria-hidden="true"><img src="stickers/etoile-doree.png" alt="" /></span>
-      <span class="sticker sticker-dragonfly-pink" aria-hidden="true"><img src="stickers/libellule-papillon.png" alt="" /></span>
-      <span class="sticker sticker-heart-pink" aria-hidden="true"><img src="stickers/coeur-rose.png" alt="" /></span>
-      <span class="sticker sticker-flower-blue" aria-hidden="true"><img src="stickers/fleur-bleue.png" alt="" /></span>
-      <span class="sticker sticker-butterfly-blue" aria-hidden="true"><img src="stickers/papillon-bleu.png" alt="" /></span>
-      <span class="sticker sticker-butterfly-pink-green" aria-hidden="true"><img src="stickers/papillon-rose-vert.png" alt="" /></span>
+      <!-- STICKERS ÉPARPILLÉS -->
+      <div class="stickers">
+        <img class="sticker sticker-gem" src="stickers/gemme-bleue.webp?v=2" width="134" height="220" alt="" decoding="async" data-size="0.52" />
+        <img class="sticker sticker-button" src="stickers/bouton-raye-violet.webp" width="220" height="220" alt="" decoding="async" />
+        <img class="sticker sticker-button" src="stickers/etoile-rose.webp" width="220" height="213" alt="" decoding="async" />
+        <img class="sticker sticker-button" src="stickers/etoile-creme.webp" width="220" height="216" alt="" decoding="async" />
+        <img class="sticker sticker-spin" src="stickers/coquillage-rose-spirale.webp" width="192" height="153" alt="" decoding="async" />
+        <img class="sticker sticker-gem" src="stickers/cristal-jaune.webp" width="150" height="220" alt="" decoding="async" data-size="0.52" />
+        <img class="sticker" src="stickers/coquillage-raye-bleu.webp" width="220" height="173" alt="" decoding="async" />
+        <img class="sticker sticker-button" src="stickers/coeur-vert.webp" width="220" height="213" alt="" decoding="async" />
+        <button class="sticker sticker-perle" type="button" aria-label="Ouvrir le coquillage violet" aria-expanded="false" data-size="1.15">
+          <span class="perle-body"><img src="stickers/coquillage-violet.webp" width="220" height="151" alt="" /></span>
+          <span class="perle-lid" aria-hidden="true"><img src="stickers/coquillage-violet.webp" width="220" height="151" alt="" /></span>
+          <span class="perle" aria-hidden="true"></span>
+        </button>
+        <img class="sticker sticker-gem" src="stickers/cristal-rose.webp" width="153" height="220" alt="" decoding="async" data-size="0.52" />
+        <img class="sticker sticker-button" src="stickers/bouton-noir.webp" width="220" height="220" alt="" decoding="async" />
+        <img class="sticker sticker-button" src="stickers/bouton-bleu.webp" width="220" height="220" alt="" decoding="async" />
+        <img class="sticker" src="stickers/etoile-brodee-grise.webp" width="220" height="206" alt="" decoding="async" />
+        <img class="sticker" src="stickers/etoile-brodee-bleue.webp" width="220" height="209" alt="" decoding="async" />
+        <img class="sticker sticker-gem" src="stickers/cristal-lilas.webp" width="158" height="220" alt="" decoding="async" data-size="0.52" />
+        <img class="sticker sticker-gem" src="stickers/cristal-bleu.webp" width="154" height="220" alt="" decoding="async" data-size="0.52" />
+        <img class="sticker sticker-button" src="stickers/bouton-prune.webp" width="220" height="219" alt="" decoding="async" />
+        <img class="sticker sticker-button" src="stickers/bouton-rose.webp" width="218" height="220" alt="" decoding="async" />
+        <img class="sticker sticker-button" src="stickers/bouton-fleur-rose.webp" width="220" height="206" alt="" decoding="async" />
+        <img class="sticker sticker-spin" src="stickers/coquillage-rosace.webp" width="220" height="202" alt="" decoding="async" />
+      </div>
+      <div class="flyers" aria-hidden="true">
+        <span class="flyer flyer-a"><img src="libellules/libellule-rayee.webp" alt="" /></span>
+        <span class="flyer flyer-c"><img src="libellules/libellule-rayee.webp" alt="" /></span>
+        <span class="flyer flyer-h"><img src="stickers/coccinelle.webp" alt="" /></span>
+        <span class="flyer flyer-k"><img src="stickers/scarabee-bleu.webp" alt="" /></span>
+        <span class="flyer flyer-l"><img src="stickers/scarabee-jaune.webp" alt="" /></span>
+      </div>
       <div class="hero-inner">
         <img class="site-logo" src="logo-neen.webp" alt="neen" />
         <div class="labels">
@@ -499,5 +677,451 @@
 
       </div>
     </header>
+
+    <!-- PETITE COLLECTION DE COQUILLAGES -->
+    <aside class="coquillages" aria-label="Petite collection de coquillages">
+      <button class="coquillage coquillage-turban" type="button" aria-label="Coquillage turban vert" data-shell="turban">
+        <img src="coquillages/coquillage-turban.webp" width="200" height="260" alt="" />
+      </button>
+      <button class="coquillage coquillage-cowrie-rose" type="button" aria-label="Petit coquillage rose" data-shell="cowrie-rose">
+        <img src="coquillages/coquillage-cowrie-rose.webp" width="449" height="260" alt="" />
+      </button>
+      <button class="coquillage coquillage-cone-raye" type="button" aria-label="Coquillage conique rayé" data-shell="cone-raye">
+        <img src="coquillages/coquillage-cone-raye.webp" width="91" height="260" alt="" />
+      </button>
+      <button class="coquillage coquillage-nautile" type="button" aria-label="Coquillage nautile vert" data-shell="nautile">
+        <img src="coquillages/coquillage-nautile.webp" width="185" height="216" alt="" />
+      </button>
+      <button class="coquillage coquillage-magenta" type="button" aria-label="Coquillage magenta" data-shell="magenta">
+        <img src="coquillages/coquillage-magenta.webp" width="199" height="260" alt="" />
+      </button>
+      <button class="coquillage coquillage-cowrie-tigre" type="button" aria-label="Coquillage tigré" data-shell="cowrie-tigre">
+        <img src="coquillages/coquillage-cowrie-tigre.webp" width="168" height="260" alt="" />
+      </button>
+      <button class="coquillage coquillage-cone-olive" type="button" aria-label="Coquillage conique olive" data-shell="cone-olive">
+        <img src="coquillages/coquillage-cone-olive.webp" width="142" height="260" alt="" />
+      </button>
+    </aside>
+    <audio
+      id="shell-audio"
+      src="audio/mother-pearl.mp3?v=2"
+      preload="none"
+      aria-hidden="true"
+    ></audio>
+    <script>
+      (() => {
+        const flyers = [...document.querySelectorAll(".flyer")];
+        if (!flyers.length) return;
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+        const TAU = Math.PI * 2;
+
+        // "fly"   : libellule, grands 8 dans l'air, battements d'ailes rapides.
+        // "crawl" : coccinelle et scarabées, marche lente et sinueuse, corps
+        //           toujours orienté dans l'axe du déplacement.
+        // base = orientation de la tête dans l'image, en degrés.
+        const specs = [
+          { sel: ".flyer-a", kind: "fly", base: -90, ax: 0.44, ay: 0.42, fx: 1, fy: 2, px: 0.0, py: 1.4, rf: 6, rp: 0.4, period: 58 },
+          { sel: ".flyer-c", kind: "fly", base: -90, ax: 0.30, ay: 0.45, fx: 2, fy: 1, px: 3.6, py: 2.2, rf: 5, rp: 3.4, period: 74 },
+          { sel: ".flyer-h", kind: "crawl", base: -90, ax: 0.34, ay: 0.36, fx: 1, fy: 2, px: 0.6, py: 4.2, rf: 2, rp: 1.1, period: 96, gait: 7.0, gaitAmp: 2.2 },
+          { sel: ".flyer-k", kind: "crawl", base: -90, ax: 0.38, ay: 0.40, fx: 2, fy: 1, px: 2.9, py: 0.7, rf: 3, rp: 2.4, period: 108, gait: 6.0, gaitAmp: 2.6 },
+          { sel: ".flyer-l", kind: "crawl", base: -90, ax: 0.33, ay: 0.38, fx: 1, fy: 3, px: 3.7, py: 2.6, rf: 2, rp: 4.1, period: 118, gait: 6.4, gaitAmp: 2.4 },
+        ]
+          .map((s) => {
+            const el = document.querySelector(s.sel);
+            return el ? { ...s, el, img: el.querySelector("img"), rot: null } : null;
+          })
+          .filter((s) => s && s.img);
+
+        const start = performance.now();
+
+        const frame = (now) => {
+          const t = (now - start) / 1000;
+          const W = window.innerWidth;
+          const H = window.innerHeight;
+
+          for (const s of specs) {
+            const ph = (t / s.period) * TAU;
+            const r = Math.min(W, H) * (s.kind === "fly" ? 0.046 : 0.026);
+
+            const x =
+              W * (0.5 + s.ax * Math.sin(s.fx * ph + s.px)) +
+              r * Math.cos(s.rf * ph + s.rp);
+            const y =
+              H * (0.5 + s.ay * Math.sin(s.fy * ph + s.py)) +
+              r * Math.sin(s.rf * ph + s.rp);
+
+            const dx =
+              W * s.ax * s.fx * Math.cos(s.fx * ph + s.px) -
+              r * s.rf * Math.sin(s.rf * ph + s.rp);
+            const dy =
+              H * s.ay * s.fy * Math.cos(s.fy * ph + s.py) +
+              r * s.rf * Math.cos(s.rf * ph + s.rp);
+
+            const heading = Math.atan2(dy, dx) * 180 / Math.PI;
+
+            // Lissage de l'orientation : l'insecte pivote au lieu de se
+            // retourner d'un coup dans les virages serrés.
+            const target = heading - s.base;
+            if (s.rot === null) {
+              s.rot = target;
+            } else {
+              const delta = ((target - s.rot + 540) % 360) - 180;
+              s.rot += delta * (s.kind === "fly" ? 0.16 : 0.1);
+            }
+
+            let bob = 0;
+            let extra = 0;
+            let scale = 1;
+            let sx = 1;
+
+            if (s.kind === "fly") {
+              // Battements d'ailes : oscillation rapide et légère.
+              const flap = Math.sin(t * 22 + s.px * 3);
+              sx = 1 + flap * 0.07;
+              bob = flap * 1.6;
+              extra = Math.sin(t * 1.9 + s.px) * 3 + flap * 1.2;
+              scale = 1 + Math.sin(t * 0.8 + s.px) * 0.03;
+            } else {
+              // Petits pas : le corps oscillle et rebondit à peine.
+              const gait = Math.sin(t * s.gait + s.px * 3);
+              extra = gait * s.gaitAmp;
+              bob = Math.abs(gait) * 0.8;
+            }
+
+            s.el.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0) translate(-50%, -50%)`;
+            s.img.style.transform = `translateY(${bob.toFixed(2)}px) rotate(${(s.rot + extra).toFixed(2)}deg) scale(${scale.toFixed(3)}) scaleX(${sx.toFixed(3)})`;
+          }
+
+          requestAnimationFrame(frame);
+        };
+
+        requestAnimationFrame(frame);
+      })();
+    </script>
+
+    <script>
+      // Semis organique : stickers et coquillages sont répartis ensemble autour
+      // du bloc logo + liens, sans jamais se chevaucher, à toutes les tailles.
+      (() => {
+        const items = [
+          ...[...document.querySelectorAll(".stickers .sticker")].map((el) => ({
+            el,
+            kind: "sticker",
+          })),
+          ...[...document.querySelectorAll(".coquillages .coquillage")].map((el) => ({
+            el,
+            kind: "shell",
+          })),
+        ];
+        if (!items.length) return;
+
+        const hero = document.querySelector(".hero-inner");
+
+        // Tirage déterministe : le semis reste le même d'une visite à l'autre.
+        let seed = 20260514;
+        const rand = () => {
+          seed = (seed + 0x6d2b79f5) | 0;
+          let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+          t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+          return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+        };
+        const between = (a, b) => a + rand() * (b - a);
+
+        const boxes = [];
+
+        const cornersOf = (b) => {
+          const c = Math.cos(b.a);
+          const s = Math.sin(b.a);
+          return [
+            [-b.hw, -b.hh],
+            [b.hw, -b.hh],
+            [b.hw, b.hh],
+            [-b.hw, b.hh],
+          ].map(([x, y]) => [b.cx + x * c - y * s, b.cy + x * s + y * c]);
+        };
+
+        const aabb = (b) => {
+          const pts = cornersOf(b);
+          let l = Infinity, t = Infinity, r = -Infinity, bo = -Infinity;
+          for (const [x, y] of pts) {
+            if (x < l) l = x;
+            if (x > r) r = x;
+            if (y < t) t = y;
+            if (y > bo) bo = y;
+          }
+          return { l, t, r, b: bo };
+        };
+
+        const hits = (A, B) => {
+          const ca = cornersOf(A);
+          const cb = cornersOf(B);
+          const axes = [];
+          for (const pts of [ca, cb]) {
+            for (let i = 0; i < 4; i++) {
+              const [x1, y1] = pts[i];
+              const [x2, y2] = pts[(i + 1) % 4];
+              const dx = x2 - x1;
+              const dy = y2 - y1;
+              const len = Math.hypot(dx, dy) || 1;
+              axes.push([-dy / len, dx / len]);
+            }
+          }
+          for (const [ax, ay] of axes) {
+            let minA = Infinity, maxA = -Infinity, minB = Infinity, maxB = -Infinity;
+            for (const [x, y] of ca) {
+              const p = x * ax + y * ay;
+              if (p < minA) minA = p;
+              if (p > maxA) maxA = p;
+            }
+            for (const [x, y] of cb) {
+              const p = x * ax + y * ay;
+              if (p < minB) minB = p;
+              if (p > maxB) maxB = p;
+            }
+            if (maxA < minB || maxB < minA) return false;
+          }
+          return true;
+        };
+
+        const clearance = (A, B) => {
+          const a = aabb(A);
+          const b = aabb(B);
+          const dx = Math.max(a.l - b.r, b.l - a.r, 0);
+          const dy = Math.max(a.t - b.b, b.t - a.b, 0);
+          return Math.hypot(dx, dy);
+        };
+
+        let signature = "";
+
+        const layout = (force) => {
+          const W = window.innerWidth;
+          const H = window.innerHeight;
+          const mobile = W < 700;
+
+          const obstacles = [];
+          for (const [el, pad] of [[hero, mobile ? 14 : 22]]) {
+            if (!el) continue;
+            const r = el.getBoundingClientRect();
+            if (r.width < 2 || r.height < 2) continue;
+            obstacles.push({
+              cx: (r.left + r.right) / 2,
+              cy: (r.top + r.bottom) / 2,
+              hw: r.width / 2 + pad,
+              hh: r.height / 2 + pad,
+              a: 0,
+            });
+          }
+
+          const sig = [
+            Math.round(W),
+            Math.round(H),
+            ...obstacles.map((o) => [o.cx, o.cy, o.hw, o.hh].map(Math.round).join(",")),
+          ].join("|");
+          if (!force && sig === signature) return;
+          signature = sig;
+
+          boxes.length = 0;
+          boxes.push(...obstacles);
+
+          const edge = mobile ? 7 : 12;
+          const gap = mobile ? 8 : 14;
+          const base = Math.max(30, Math.min(W * 0.082, H * 0.096, 86));
+
+          const order = items.slice();
+          for (let i = order.length - 1; i > 0; i--) {
+            const j = Math.floor(rand() * (i + 1));
+            [order[i], order[j]] = [order[j], order[i]];
+          }
+
+          order.forEach(({ el, kind }) => {
+            const media = el.tagName === "IMG" ? el : el.querySelector("img");
+            const iw =
+              Number(el.getAttribute("width")) ||
+              Number(media && media.getAttribute("width")) ||
+              1;
+            const ih =
+              Number(el.getAttribute("height")) ||
+              Number(media && media.getAttribute("height")) ||
+              1;
+            const ratio = iw / ih;
+            const wide = ratio >= 1;
+            const bias = Number(el.dataset.size) || 1;
+            const scale = between(0.74, 1.16) * bias;
+            let size = Math.max(mobile ? 18 : 26, base * scale);
+            let w = wide ? size : size * ratio;
+            let h = wide ? size / ratio : size;
+
+            let spot = null;
+
+            for (let round = 0; round < 4 && !spot; round++) {
+              if (round) {
+                w *= 0.86;
+                h *= 0.86;
+              }
+              const candidates = [];
+              for (let tryI = 0; tryI < 260 && candidates.length < 30; tryI++) {
+                const rot =
+                  kind === "shell"
+                    ? between(-26, 26)
+                    : rand() < 0.2
+                      ? between(-38, -22)
+                      : rand() < 0.2
+                        ? between(22, 38)
+                        : between(-19, 19);
+                const rad = (rot * Math.PI) / 180;
+                const ex = (Math.abs(w * Math.cos(rad)) + Math.abs(h * Math.sin(rad))) / 2;
+                const ey = (Math.abs(w * Math.sin(rad)) + Math.abs(h * Math.cos(rad))) / 2;
+                if (ex * 2 > W - edge * 2 || ey * 2 > H - edge * 2) continue;
+
+                const cx = between(edge + ex, W - edge - ex);
+                const cy = between(edge + ey, H - edge - ey);
+                const cand = { cx, cy, hw: w / 2 + gap / 2, hh: h / 2 + gap / 2, a: rad, rot };
+
+                if (boxes.some((b) => hits(cand, b))) continue;
+                cand.score = Math.min(...boxes.map((b) => clearance(cand, b))) + rand() * 16;
+                candidates.push(cand);
+              }
+              if (candidates.length) {
+                candidates.sort((a, b) => b.score - a.score);
+                spot = candidates[0];
+              }
+            }
+
+            if (!spot) {
+              el.classList.remove("is-placed");
+              return;
+            }
+
+            el.style.width = `${w}px`;
+            el.style.height = `${h}px`;
+            el.style.left = `${spot.cx - w / 2}px`;
+            el.style.top = `${spot.cy - h / 2}px`;
+
+            if (kind === "shell") {
+              el.style.setProperty("--rest", `${spot.rot.toFixed(2)}deg`);
+              el.style.setProperty("--rock", `${between(2, 4).toFixed(2)}deg`);
+              el.style.setProperty("--dur", `${between(6.2, 8.8).toFixed(2)}s`);
+              el.style.setProperty("--delay", `${(-between(0, 5)).toFixed(2)}s`);
+            } else {
+              el.style.setProperty("--rot", `${spot.rot.toFixed(2)}deg`);
+            }
+            el.classList.add("is-placed");
+
+            boxes.push({ cx: spot.cx, cy: spot.cy, hw: w / 2, hh: h / 2, a: (spot.rot * Math.PI) / 180 });
+          });
+        };
+
+        let timer = 0;
+        const schedule = () => {
+          window.clearTimeout(timer);
+          timer = window.setTimeout(layout, 120);
+        };
+
+        layout(true);
+        window.addEventListener("resize", schedule);
+        window.addEventListener("load", () => layout(true));
+        if (document.fonts && document.fonts.ready) {
+          document.fonts.ready.then(() => layout(true));
+        }
+        if ("ResizeObserver" in window && hero) {
+          const ro = new ResizeObserver(schedule);
+          ro.observe(hero);
+        }
+        window.addEventListener("orientationchange", () => layout(true));
+      })();
+    </script>
+
+    <script>
+      (() => {
+        const buttons = [...document.querySelectorAll(".coquillage")];
+        if (!buttons.length) return;
+
+        // Un même morceau pour toute la collection, prêt à être personnalisé
+        // coquillage par coquillage plus tard.
+        const sounds = {
+          turban: "audio/mother-pearl.mp3?v=2",
+          "cowrie-rose": "audio/mother-pearl.mp3?v=2",
+          "cone-raye": "audio/mother-pearl.mp3?v=2",
+          nautile: "audio/mother-pearl.mp3?v=2",
+          magenta: "audio/mother-pearl.mp3?v=2",
+          "cowrie-tigre": "audio/mother-pearl.mp3?v=2",
+          "cone-olive": "audio/mother-pearl.mp3?v=2",
+        };
+
+        const player = document.getElementById("shell-audio");
+        let activeKey = null;
+
+        const syncPressed = () => {
+          for (const btn of buttons) {
+            btn.setAttribute(
+              "aria-pressed",
+              btn.dataset.shell === activeKey ? "true" : "false"
+            );
+          }
+        };
+
+        const stopSound = () => {
+          if (!player) return;
+          player.pause();
+          try {
+            player.currentTime = 0;
+          } catch (_) {
+            // Rien à rembobiner si le média n'est pas chargé.
+          }
+          activeKey = null;
+          syncPressed();
+        };
+
+        const playSound = (key) => {
+          const src = sounds[key];
+          if (!src || !player) return false;
+
+          // Un nouveau clic sur le coquillage en cours arrête la musique.
+          if (activeKey === key && !player.paused) {
+            stopSound();
+            return false;
+          }
+
+          if (player.getAttribute("src") !== src) player.setAttribute("src", src);
+          try {
+            player.currentTime = 0;
+          } catch (_) {
+            // Le média n'est pas encore prêt : play() le chargera.
+          }
+          player.play().catch(() => {});
+          activeKey = key;
+          syncPressed();
+          return true;
+        };
+
+        if (player) {
+          player.addEventListener("ended", () => {
+            activeKey = null;
+            syncPressed();
+          });
+        }
+
+        syncPressed();
+
+        // Coquillage violet : ouverture/fermeture au clic, avec sa perle.
+        const perle = document.querySelector(".sticker-perle");
+        if (perle) {
+          perle.addEventListener("click", () => {
+            const open = perle.classList.toggle("is-open");
+            perle.setAttribute("aria-expanded", open ? "true" : "false");
+          });
+        }
+
+        for (const btn of buttons) {
+          btn.addEventListener("click", () => {
+            playSound(btn.dataset.shell);
+          });
+        }
+
+        // Permet de déclencher un son depuis la console une fois les fichiers prêts.
+        window.neenPlayShell = playSound;
+      })();
+    </script>
   </body>
 </html>
