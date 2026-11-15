@@ -54,6 +54,7 @@
       }
 
       .hero-inner {
+        --logo-w: min(350px, 74vw);
         position: relative;
         z-index: 2;
         display: flex;
@@ -64,7 +65,7 @@
 
       .site-logo {
         position: relative;
-        width: min(350px, 74vw);
+        width: var(--logo-w);
         height: auto;
         display: block;
         filter: drop-shadow(0 8px 16px rgba(70, 20, 45, 0.18));
@@ -169,55 +170,183 @@
         user-select: none;
       }
 
+      .sticker img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
       .sticker-button,
       .sticker-gem,
-      .sticker-spin {
+      .sticker-spin,
+      .sticker-bougie {
         pointer-events: auto;
       }
 
       .sticker-button,
-      .sticker-spin {
+      .sticker-bougie,
+      .sticker-theiere,
+      .sticker-timbre {
         cursor: pointer;
       }
 
-      /* Boutons : va-et-vient de ±40° autour de leur centre. */
-      @keyframes button-turn {
-        0% {
+      /* Théière et timbre restent sobres au clavier : pas de cadre blanc,
+         un halo doux à la place. */
+      .sticker-theiere,
+      .sticker-timbre {
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+      }
+
+      .sticker-theiere:focus,
+      .sticker-theiere:focus-visible,
+      .sticker-timbre:focus,
+      .sticker-timbre:focus-visible {
+        outline: none;
+      }
+
+      .sticker-theiere:focus-visible,
+      .sticker-timbre:focus-visible {
+        filter: brightness(1.05) drop-shadow(0 0 7px rgba(255, 246, 214, 0.85));
+      }
+
+      /* Objets ronds (boutons, fleurs, café) : un tour complet sur eux-mêmes. */
+      @keyframes sticker-spin {
+        from {
           transform: rotate(var(--rot, 0deg));
         }
-        28% {
-          transform: rotate(calc(var(--rot, 0deg) - 40deg));
-        }
-        68% {
-          transform: rotate(calc(var(--rot, 0deg) + 40deg));
-        }
-        100% {
-          transform: rotate(var(--rot, 0deg));
+        to {
+          transform: rotate(calc(var(--rot, 0deg) + 360deg));
         }
       }
 
-      .sticker-button:hover {
-        animation: button-turn 0.85s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+      .sticker-button:hover,
+      .sticker-spin:hover {
+        animation: sticker-spin 0.95s cubic-bezier(0.12, 0.86, 0.3, 1);
+        z-index: 2;
       }
 
-      /* Gemmes : un tout petit éclat quand la souris passe dessus. */
-      @keyframes gem-shine {
+      /* Bougie : se dandine comme un coquillage au survol, et s'éteint au clic. */
+      .sticker-bougie {
+        transform-origin: 50% 50%;
+      }
+
+      @keyframes candle-rock {
         0%,
         100% {
-          filter: drop-shadow(0 4px 7px rgba(40, 30, 45, 0.2));
+          transform: rotate(calc(var(--rock, 3deg) * -0.8)) translateY(0);
         }
-        38% {
-          filter: brightness(1.24) saturate(1.15)
-            drop-shadow(0 0 8px rgba(255, 246, 214, 0.95))
-            drop-shadow(0 0 20px rgba(255, 190, 225, 0.75));
+        35% {
+          transform: rotate(calc(var(--rock, 3deg) * 0.6)) translateY(-1.4px);
         }
-        68% {
-          filter: brightness(1.08) drop-shadow(0 0 4px rgba(255, 246, 214, 0.6));
+        70% {
+          transform: rotate(calc(var(--rock, 3deg) * -0.3)) translateY(0.7px);
         }
+      }
+
+      .sticker-bougie:hover img {
+        animation: candle-rock var(--dur, 2.2s) ease-in-out infinite;
+        transform-origin: 50% 92%;
+      }
+
+      .sticker-bougie {
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+      }
+
+      .sticker-bougie:focus,
+      .sticker-bougie:focus-visible {
+        outline: none;
+      }
+
+      .sticker-bougie:focus-visible {
+        filter: brightness(1.06) drop-shadow(0 0 7px rgba(255, 246, 214, 0.9));
+      }
+
+      /* Nuit : voile sombre quand la bougie s'éteint. Noir complet pendant
+         deux secondes, puis veilleuse douce tant que la flamme reste éteinte. */
+      .night {
+        position: fixed;
+        inset: 0;
+        z-index: 40;
+        background: radial-gradient(
+          circle at 50% 46%,
+          rgba(14, 12, 22, 0.52),
+          rgba(5, 5, 11, 0.84) 78%
+        );
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.6s ease;
+      }
+
+      .night.is-on {
+        opacity: 1;
+      }
+
+      .night.is-dim {
+        opacity: 0.34;
+      }
+
+      /* Gemmes : le brillant s'allume tout de suite et reste tant que la
+         souris est dessus (aucun délai, aucun clignotement). */
+      .sticker-gem {
+        transition: filter 0.12s ease;
       }
 
       .sticker-gem:hover {
-        animation: gem-shine 0.9s ease-in-out;
+        filter: brightness(1.28) saturate(1.18)
+          drop-shadow(0 0 7px rgba(255, 248, 220, 0.95))
+          drop-shadow(0 0 18px rgba(255, 190, 225, 0.8));
+      }
+
+      /* Objets qui se balancent de -15° à +15° au survol. Le balancement
+         part du centre vers la gauche, puis revient à droite. */
+      @keyframes sticker-swing {
+        0%,
+        100% {
+          transform: rotate(var(--rot, 0deg));
+        }
+        30% {
+          transform: rotate(calc(var(--rot, 0deg) - 15deg));
+        }
+        70% {
+          transform: rotate(calc(var(--rot, 0deg) + 15deg));
+        }
+      }
+
+      .sticker-swing {
+        pointer-events: auto;
+      }
+
+      .sticker-swing:hover {
+        animation: sticker-swing 1.9s ease-in-out infinite;
+        z-index: 2;
+      }
+
+      /* Cachet de cire : le même dandinement continu que les coquillages. */
+      @keyframes wax-rock {
+        0%,
+        100% {
+          transform: rotate(calc(var(--rot, 0deg) - var(--rock, 2.6deg)));
+        }
+        32% {
+          transform: rotate(
+            calc(var(--rot, 0deg) + var(--rock, 2.6deg) * 0.7)
+          );
+        }
+        68% {
+          transform: rotate(
+            calc(var(--rot, 0deg) - var(--rock, 2.6deg) * 0.35)
+          );
+        }
+      }
+
+      .sticker-rock {
+        animation: wax-rock var(--dur, 7.4s) ease-in-out var(--delay, 0s)
+          infinite;
+        transform-origin: 50% 92%;
+        will-change: transform;
       }
 
       /* Étoiles : zoom avant puis retour à la taille normale au survol. */
@@ -231,7 +360,7 @@
           transform: rotate(var(--rot, 0deg)) scale(1);
         }
         45% {
-          transform: rotate(var(--rot, 0deg)) scale(1.36);
+          transform: rotate(var(--rot, 0deg)) scale(1.13);
         }
         100% {
           transform: rotate(var(--rot, 0deg)) scale(1);
@@ -239,22 +368,8 @@
       }
 
       .sticker-star:hover {
-        animation: star-zoom 1.1s cubic-bezier(0.34, 1.32, 0.5, 1);
+        animation: star-zoom 0.95s cubic-bezier(0.34, 1.24, 0.5, 1);
         z-index: 2;
-      }
-
-      /* Coquillages spirale : un tour complet dans le sens inverse. */
-      @keyframes sticker-spin-right {
-        from {
-          transform: rotate(var(--rot, 0deg));
-        }
-        to {
-          transform: rotate(calc(var(--rot, 0deg) + 360deg));
-        }
-      }
-
-      .sticker-spin:hover {
-        animation: sticker-spin-right 0.95s cubic-bezier(0.45, 0.05, 0.55, 0.95);
       }
 
       /* COQUILLAGES */
@@ -290,10 +405,13 @@
         opacity: 1;
       }
 
+      .coquillage:focus {
+        outline: none;
+      }
+
       .coquillage:focus-visible {
-        outline: 2px solid rgba(255, 255, 255, 0.9);
-        outline-offset: 3px;
-        border-radius: 12px;
+        outline: none;
+        filter: brightness(1.06) drop-shadow(0 0 7px rgba(255, 255, 255, 0.6));
       }
 
       .coquillage img {
@@ -330,39 +448,35 @@
         }
       }
 
-      /* Nautile : tour complet dans le sens inverse au survol. */
-      @keyframes coquillage-spin-right {
-        from {
-          transform: rotate(0deg);
-        }
-        to {
-          transform: rotate(360deg);
-        }
-      }
-
-      .coquillage-nautile:hover img {
-        animation: coquillage-spin-right 0.95s cubic-bezier(0.45, 0.05, 0.55, 0.95);
-        transform-origin: 50% 50%;
-      }
-
       @media (prefers-reduced-motion: reduce) {
         .coquillage img,
         .sticker-button:hover,
         .sticker-gem:hover,
-        .sticker-spin:hover,
         .sticker-star:hover,
-        .coquillage-nautile:hover img {
+        .sticker-spin:hover,
+        .sticker-swing:hover,
+        .sticker-rock,
+        .sticker-bougie:hover img {
           animation: none;
+        }
+
+        .night {
+          transition: none;
         }
       }
 
       /* ÉTIQUETTES PAPIER */
       .labels {
         width: min(346px, 50.4vw);
+        display: flex;
+        flex-direction: column;
+        row-gap: clamp(0.6rem, 1.6vh, 1rem);
+      }
+
+      .label-row {
         display: grid;
         grid-template-columns: 1fr 1fr;
         column-gap: clamp(0.4rem, 1vw, 0.8rem);
-        row-gap: clamp(0.6rem, 1.6vh, 1rem);
         align-items: center;
       }
 
@@ -474,22 +588,64 @@
         transform: translateY(-2px);
       }
 
+      /* Téléphone : chaque rangée d'étiquettes s'étire d'une ligne latérale du
+         logo à l'autre. Les deux étiquettes d'une même rangée se partagent la
+         largeur au prorata de la taille de leur écriture (--share), pour que
+         la typographie manuscrite ait la même hauteur de part et d'autre. */
       @media (max-width: 700px) {
         .labels {
-          column-gap: 0.5rem;
+          width: var(--logo-w);
+          /* Les papiers restent à l'aplomb des lignes du logo sans que leur
+             bord déchiré soit pile dessus (ce qui donnait l'impression d'un
+             rognage net) : 9 px de respiration de chaque côté. */
+          padding-inline: 9px;
           row-gap: 0.9rem;
         }
 
+        .label-row {
+          display: flex;
+          column-gap: 0.35rem;
+          align-items: center;
+        }
+
+        .label-link {
+          min-width: 0;
+          max-width: none;
+          --scale: 1;
+          flex: var(--share, 1) 1 0;
+        }
+
+        .label-instagram {
+          --share: 2.38;
+        }
+
         .label-spotify {
+          --share: 2.62;
           margin-top: 0.5rem;
         }
 
         .label-youtube {
-          margin-left: 3%;
+          --share: 2.34;
+          margin-left: 0;
         }
 
+        .label-mail {
+          --share: 2.27;
+        }
+
+        /* Deezer et Apple Music côte à côte, mais Deezer à gauche et Apple
+           Music à droite. Apple Music est un peu rétrécie pour laisser à
+           Deezer une taille correcte ; les deux restent collées aux lignes
+           latérales du logo. */
         .label-deezer {
+          --share: 2.2;
+          order: 1;
           margin-top: 0.4rem;
+        }
+
+        .label-apple-music {
+          --share: 2.7;
+          order: 2;
         }
       }
 
@@ -498,39 +654,57 @@
           padding: 1.25rem;
         }
 
-        .site-logo {
-          width: min(300px, 82vw);
+        .hero-inner {
+          --logo-w: min(300px, 82vw);
         }
       }
     </style>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="preload" as="image" href="stickers/bougie-eteinte.webp">
   </head>
   <body>
     <!-- LOGO -->
     <header class="hero">
       <!-- STICKERS ÉPARPILLÉS -->
       <div class="stickers">
-        <img class="sticker sticker-gem" src="stickers/gemme-bleue.webp?v=2" width="134" height="220" alt="" decoding="async" data-size="0.52" />
-        <img class="sticker sticker-button" src="stickers/bouton-raye-violet.webp" width="220" height="220" alt="" decoding="async" />
-        <img class="sticker sticker-star" src="stickers/etoile-rose.webp" width="220" height="213" alt="" decoding="async" />
-        <img class="sticker sticker-star" src="stickers/etoile-creme.webp" width="220" height="216" alt="" decoding="async" />
-        <img class="sticker sticker-gem" src="stickers/cristal-jaune.webp" width="150" height="220" alt="" decoding="async" data-size="0.52" />
-        <img class="sticker sticker-button" src="stickers/coeur-vert.webp" width="220" height="213" alt="" decoding="async" />
-        <img class="sticker sticker-gem" src="stickers/cristal-rose.webp" width="153" height="220" alt="" decoding="async" data-size="0.52" />
-        <img class="sticker sticker-button" src="stickers/bouton-noir.webp" width="220" height="220" alt="" decoding="async" />
-        <img class="sticker sticker-button" src="stickers/bouton-bleu.webp" width="220" height="220" alt="" decoding="async" />
-        <img class="sticker sticker-star" src="stickers/etoile-brodee-grise.webp" width="220" height="206" alt="" decoding="async" />
-        <img class="sticker sticker-star" src="stickers/etoile-brodee-bleue.webp" width="220" height="209" alt="" decoding="async" />
-        <img class="sticker sticker-gem" src="stickers/cristal-lilas.webp" width="158" height="220" alt="" decoding="async" data-size="0.52" />
-        <img class="sticker sticker-gem" src="stickers/cristal-bleu.webp" width="154" height="220" alt="" decoding="async" data-size="0.52" />
-        <img class="sticker sticker-button" src="stickers/bouton-prune.webp" width="220" height="219" alt="" decoding="async" />
-        <img class="sticker sticker-button" src="stickers/bouton-rose.webp" width="218" height="220" alt="" decoding="async" />
-        <img class="sticker sticker-button" src="stickers/bouton-fleur-rose.webp" width="220" height="206" alt="" decoding="async" />
-        <img class="sticker sticker-spin" src="stickers/coquillage-rosace.webp" width="220" height="202" alt="" decoding="async" />
+        <!-- Étoiles : zoom au survol, scintillement au clic. -->
+        <img class="sticker sticker-star" src="stickers/etoile-jean.webp" width="520" height="496" alt="" decoding="async" data-size="1" />
+        <img class="sticker sticker-star" src="stickers/etoile-leopard.webp" width="520" height="496" alt="" decoding="async" data-size="1" />
+        <img class="sticker sticker-star" src="stickers/etoile-vache.webp" width="520" height="487" alt="" decoding="async" data-size="1" />
+
+        <!-- Boutons : va-et-vient au survol. -->
+        <img class="sticker sticker-button sticker-spin" src="stickers/bouton-bleu.webp" width="220" height="220" alt="" decoding="async" data-size="0.66" />
+        <img class="sticker sticker-button sticker-spin" src="stickers/bouton-noir.webp" width="220" height="220" alt="" decoding="async" data-size="0.66" />
+        <img class="sticker sticker-button sticker-spin" src="stickers/bouton-rouge.webp" width="520" height="517" alt="" decoding="async" data-size="0.66" />
+
+        <!-- Gemmes et cristaux : petit éclat au survol. -->
+        <img class="sticker sticker-gem" src="stickers/gemme-bleue.webp" width="134" height="220" alt="" decoding="async" data-size="0.58" />
+        <img class="sticker sticker-gem" src="stickers/cristal-jaune.webp" width="150" height="220" alt="" decoding="async" data-size="0.58" />
+        <img class="sticker sticker-gem" src="stickers/cristal-rose.webp" width="153" height="220" alt="" decoding="async" data-size="0.58" />
+
+        <!-- Petites trouvailles, simplement posées sur la peinture. -->
+        <img class="sticker sticker-rock" src="stickers/cachet-cire.webp" width="520" height="489" alt="" decoding="async" data-size="0.6" style="--rock: 2.6deg; --dur: 7.4s; --delay: -1.6s" />
+        <img class="sticker sticker-spin" src="stickers/myrtille.webp" width="520" height="479" alt="" decoding="async" data-size="0.42" />
+        <span class="sticker sticker-bougie" role="button" tabindex="0" aria-label="Bougie" data-upright="1" data-size="0.72">
+          <img src="stickers/bougie.webp" width="374" height="520" alt="" decoding="async"
+               data-lit="stickers/bougie.webp" data-out="stickers/bougie-eteinte.webp" />
+        </span>
+        <img class="sticker sticker-swing" src="stickers/champignon.webp" width="478" height="520" alt="" decoding="async" data-size="0.9" />
+        <img class="sticker sticker-spin" src="stickers/cafe.webp" width="496" height="500" alt="" decoding="async" data-size="0.88" />
+        <img class="sticker sticker-swing" src="stickers/poire.webp" width="381" height="520" alt="" decoding="async" data-size="0.64" />
+        <img class="sticker sticker-swing" src="stickers/fer-a-cheval.webp" width="485" height="520" alt="" decoding="async" data-size="0.6" />
+        <img class="sticker sticker-swing" src="stickers/miel.webp" width="409" height="520" alt="" decoding="async" data-size="0.8" />
+        <img class="sticker sticker-spin" src="stickers/oeuf.webp" width="520" height="476" alt="" decoding="async" data-size="0.95" />
+        <img class="sticker sticker-spin" src="stickers/pensee.webp" width="520" height="515" alt="" decoding="async" data-size="0.85" />
+        <img class="sticker" src="stickers/piece.webp" width="520" height="516" alt="" decoding="async" data-size="0.5" />
+        <img class="sticker sticker-swing sticker-theiere" src="stickers/theiere.webp" width="464" height="306" alt="" decoding="async" data-size="0.95" role="button" tabindex="0" aria-label="Théière" />
+        <img class="sticker sticker-swing sticker-timbre" src="stickers/timbre.webp" width="423" height="520" alt="" decoding="async" data-size="0.78" role="button" tabindex="0" aria-label="Timbre" />
+        <img class="sticker sticker-spin" src="stickers/tournesol.webp" width="472" height="458" alt="" decoding="async" data-size="0.78" />
       </div>
+      <!-- INSECTES EN VOL -->
       <div class="flyers">
-        <span class="flyer flyer-a" role="button" tabindex="0" aria-label="Libellule"><img src="libellules/libellule-rayee.webp" alt="" /></span>
-        <span class="flyer flyer-c" role="button" tabindex="0" aria-label="Libellule"><img src="libellules/libellule-rayee.webp" alt="" /></span>
+        <span class="flyer flyer-a" role="button" tabindex="0" aria-label="Libellule"><img src="stickers/libellule-rayee.webp" alt="" /></span>
+        <span class="flyer flyer-c" role="button" tabindex="0" aria-label="Libellule"><img src="stickers/libellule-rayee.webp" alt="" /></span>
         <span class="flyer flyer-h" role="button" tabindex="0" aria-label="Coccinelle"><img src="stickers/coccinelle.webp" alt="" /></span>
         <span class="flyer flyer-k" role="button" tabindex="0" aria-label="Scarabée bleu"><img src="stickers/scarabee-bleu.webp" alt="" /></span>
         <span class="flyer flyer-l" role="button" tabindex="0" aria-label="Scarabée jaune"><img src="stickers/scarabee-jaune.webp" alt="" /></span>
@@ -540,6 +714,7 @@
       <div class="hero-inner">
         <img class="site-logo" src="logo-neen.webp" alt="neen" />
         <div class="labels">
+          <div class="label-row">
           <a
             class="label-link label-instagram"
             href="https://www.instagram.com/chloe_bastianon/?hl=fr"
@@ -562,12 +737,14 @@
             aria-label="Spotify"
           >
             <img
-              src="labels/spotify.webp?v=3"
+              src="labels/spotify.webp?v=4"
               alt="Spotify"
               decoding="async"
             />
           </a>
+          </div>
 
+          <div class="label-row">
           <a
             class="label-link label-youtube"
             href="https://youtu.be/-gjMbGog5sU?si=s8XahSGEcQchLH_8"
@@ -588,12 +765,14 @@
             aria-label="Email"
           >
             <img
-              src="labels/mail.webp?v=3"
+              src="labels/mail.webp?v=4"
               alt="Email"
               decoding="async"
             />
           </a>
+          </div>
 
+          <div class="label-row">
           <a
             class="label-link label-apple-music"
             href="https://music.apple.com/fr/artist/neen/1894908742?l=en-GB"
@@ -602,7 +781,7 @@
             aria-label="Apple Music"
           >
             <img
-              src="labels/apple-music.webp?v=3"
+              src="labels/apple-music.webp?v=4"
               alt="Apple Music"
               decoding="async"
             />
@@ -616,11 +795,12 @@
             aria-label="Deezer"
           >
             <img
-              src="labels/deezer.webp?v=3"
+              src="labels/deezer.webp?v=4"
               alt="Deezer"
               decoding="async"
             />
           </a>
+          </div>
         </div>
 
       </div>
@@ -628,28 +808,22 @@
 
     <!-- PETITE COLLECTION DE COQUILLAGES -->
     <aside class="coquillages" aria-label="Petite collection de coquillages">
-      <span class="coquillage coquillage-turban" role="button" tabindex="0" aria-label="Coquillage turban vert">
-        <img src="coquillages/coquillage-turban.webp" width="200" height="260" alt="" />
-      </span>
-      <span class="coquillage coquillage-cowrie-rose" role="button" tabindex="0" aria-label="Petit coquillage rose">
-        <img src="coquillages/coquillage-cowrie-rose.webp" width="449" height="260" alt="" />
-      </span>
-      <span class="coquillage coquillage-cone-raye" role="button" tabindex="0" aria-label="Coquillage conique rayé">
-        <img src="coquillages/coquillage-cone-raye.webp" width="91" height="260" alt="" />
-      </span>
-      <span class="coquillage coquillage-nautile" role="button" tabindex="0" aria-label="Coquillage nautile vert">
-        <img src="coquillages/coquillage-nautile.webp" width="185" height="216" alt="" />
+      <span class="coquillage coquillage-turban" role="button" tabindex="0" aria-label="Coquillage turban vert" data-size="0.62">
+        <img src="stickers/coquillage-turban.webp" width="200" height="260" alt="" />
       </span>
       <span class="coquillage coquillage-cowrie-tigre" role="button" tabindex="0" aria-label="Coquillage tigré">
-        <img src="coquillages/coquillage-cowrie-tigre.webp" width="168" height="260" alt="" />
+        <img src="stickers/coquillage-cowrie-tigre.webp" width="168" height="260" alt="" />
       </span>
       <span class="coquillage coquillage-cone-olive" role="button" tabindex="0" aria-label="Coquillage conique olive">
-        <img src="coquillages/coquillage-cone-olive.webp" width="142" height="260" alt="" />
+        <img src="stickers/coquillage-cone-olive.webp" width="142" height="260" alt="" />
       </span>
     </aside>
+    <div class="night" aria-hidden="true"></div>
     <audio id="insect-audio" src="audio/dragonfly.mp3" preload="auto"></audio>
     <audio id="star-audio" src="audio/shine.mp3" preload="auto"></audio>
     <audio id="shell-audio" src="audio/ocean.mp3" preload="auto"></audio>
+    <audio id="theiere-audio" src="audio/theiere.m4a" preload="auto"></audio>
+    <audio id="timbre-audio" src="audio/timbre.m4a" preload="auto"></audio>
     <script>
       (() => {
         const flyers = [...document.querySelectorAll(".flyer")];
@@ -681,9 +855,9 @@
 
         const start = performance.now();
 
-        // --- Survol d'un insecte -------------------------------------------
+        // --- Clic sur un insecte -------------------------------------------
         // L'insecte continue son vol : on entend seulement son bruit
-        // (les 3 premières secondes de l'audio).
+        // (les 3 premières secondes de l'audio), uniquement au clic.
         const audio = document.getElementById("insect-audio");
         const SOUND_MS = 3000;
         let audioTimer = null;
@@ -706,7 +880,7 @@
         };
 
         for (const s of specs) {
-          s.el.addEventListener("pointerenter", playInsectSound);
+          s.el.addEventListener("click", playInsectSound);
           s.el.addEventListener("keydown", (e) => {
             if (e.key === "Enter" || e.key === " ") {
               e.preventDefault();
@@ -801,7 +975,8 @@
         const hero = document.querySelector(".hero-inner");
 
         // Tirage déterministe : le semis reste le même d'une visite à l'autre.
-        let seed = 20260514;
+        const SEED = 20260514;
+        let seed = SEED;
         const rand = () => {
           seed = (seed + 0x6d2b79f5) | 0;
           let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
@@ -907,8 +1082,17 @@
           boxes.push(...obstacles);
 
           const edge = mobile ? 7 : 12;
-          const gap = mobile ? 8 : 14;
-          const base = Math.max(30, Math.min(W * 0.082, H * 0.096, 86));
+          const gap = mobile ? 7 : 14;
+          // Taille de référence : relative à l'écran, plafonnée pour que les
+          // objets restent des petits riens posés sur la peinture.
+          const base = Math.max(
+            mobile ? 34 : 30,
+            Math.min(W * (mobile ? 0.096 : 0.082), H * 0.096, mobile ? 92 : 86),
+          );
+
+          // Même point de départ à chaque passage : le semis ne bouge plus
+          // quand la page se recharge ou que la fenêtre se redimensionne.
+          seed = SEED;
 
           const order = items.slice();
           for (let i = order.length - 1; i > 0; i--) {
@@ -929,6 +1113,7 @@
             const ratio = iw / ih;
             const wide = ratio >= 1;
             const bias = Number(el.dataset.size) || 1;
+            const upright = el.dataset.upright === "1";
             const scale = between(0.74, 1.16) * bias;
             let size = Math.max(mobile ? 18 : 26, base * scale);
             let w = wide ? size : size * ratio;
@@ -943,8 +1128,9 @@
               }
               const candidates = [];
               for (let tryI = 0; tryI < 260 && candidates.length < 30; tryI++) {
-                const rot =
-                  kind === "shell"
+                const rot = upright
+                  ? 0
+                  : kind === "shell"
                     ? between(-26, 26)
                     : rand() < 0.2
                       ? between(-38, -22)
@@ -1015,14 +1201,14 @@
     </script>
 
     <script>
-      // Étoiles : petit scintillement sonore quand la souris passe dessus.
+      // Étoiles : petit scintillement sonore au clic.
       (() => {
         const audio = document.getElementById("star-audio");
         const stars = [...document.querySelectorAll(".sticker-star")];
         if (!audio || !stars.length) return;
 
         for (const star of stars) {
-          star.addEventListener("pointerenter", () => {
+          star.addEventListener("click", () => {
             audio.pause();
             audio.currentTime = 0;
             const played = audio.play();
@@ -1033,29 +1219,63 @@
     </script>
 
     <script>
-      // Coquillages : clic = les 2 premières secondes du bruit de vagues.
+      // Coquillages : clic = environ 2 secondes de vagues, avec un fondu
+      // de sortie sur la fin pour que le bruit s'éteigne en douceur.
       (() => {
         const audio = document.getElementById("shell-audio");
         const shells = [...document.querySelectorAll(".coquillages .coquillage")];
         if (!audio || !shells.length) return;
 
         const CLIP_MS = 2000;
-        let timer = null;
+        const FADE_MS = 800;
+        const BASE_VOLUME = 1;
+        let startTimer = null;
+        let fadeTimer = null;
+        let safetyTimer = null;
 
-        const play = () => {
-          if (timer !== null) {
-            clearTimeout(timer);
-            timer = null;
+        const stop = () => {
+          if (startTimer !== null) {
+            clearTimeout(startTimer);
+            startTimer = null;
+          }
+          if (fadeTimer !== null) {
+            clearInterval(fadeTimer);
+            fadeTimer = null;
+          }
+          if (safetyTimer !== null) {
+            clearTimeout(safetyTimer);
+            safetyTimer = null;
           }
           audio.pause();
           audio.currentTime = 0;
+          audio.volume = BASE_VOLUME;
+        };
+
+        const fadeOut = () => {
+          if (fadeTimer !== null) {
+            clearInterval(fadeTimer);
+            fadeTimer = null;
+          }
+          const startLevel = audio.volume;
+          const t0 = performance.now();
+          // Intervalle plutôt que requestAnimationFrame : le fondu reste
+          // régulier même si l'onglet n'est pas au premier plan.
+          fadeTimer = window.setInterval(() => {
+            const k = Math.min(1, (performance.now() - t0) / FADE_MS);
+            // Courbe adoucie : la vague s'éteint sans coupure sèche.
+            audio.volume = startLevel * Math.pow(1 - k, 1.6);
+            if (k >= 1) stop();
+          }, 40);
+          // Filet de sécurité : on coupe même si les timers sont ralentis.
+          safetyTimer = window.setTimeout(stop, FADE_MS + 300);
+        };
+
+        const play = () => {
+          stop();
+          audio.volume = BASE_VOLUME;
           const played = audio.play();
           if (played && typeof played.catch === "function") played.catch(() => {});
-          timer = window.setTimeout(() => {
-            audio.pause();
-            audio.currentTime = 0;
-            timer = null;
-          }, CLIP_MS);
+          startTimer = window.setTimeout(fadeOut, CLIP_MS - FADE_MS);
         };
 
         for (const shell of shells) {
@@ -1067,6 +1287,92 @@
             }
           });
         }
+      })();
+    </script>
+
+    <script>
+      // Petits sons de clic : le thé qui coule, le timbre qu'on tamponne.
+      // Chaque extrait démarre au moment utile du fichier d'origine, sans
+      // le silence qui précède.
+      (() => {
+        const sounds = [
+          { audio: "theiere-audio", el: ".sticker-theiere" },
+          { audio: "timbre-audio", el: ".sticker-timbre" },
+        ];
+
+        for (const { audio: audioId, el: selector } of sounds) {
+          const audio = document.getElementById(audioId);
+          const el = document.querySelector(selector);
+          if (!audio || !el) continue;
+
+          const play = () => {
+            audio.pause();
+            audio.currentTime = 0;
+            const played = audio.play();
+            if (played && typeof played.catch === "function") played.catch(() => {});
+          };
+
+          el.addEventListener("click", play);
+          el.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              play();
+            }
+          });
+        }
+      })();
+    </script>
+
+    <script>
+      // Bougie : un clic éteint la flamme et assombrit la pièce ; elle reste
+      // éteinte jusqu'au clic suivant, qui la rallume.
+      (() => {
+        const candle = document.querySelector(".sticker-bougie");
+        const night = document.querySelector(".night");
+        if (!candle || !night) return;
+
+        const DARK_MS = 2000;
+        const flame = candle.querySelector("img");
+        const LIT = flame.dataset.lit;
+        const OUT = flame.dataset.out;
+        let off = false;
+        let settleTimer = null;
+
+        const relight = () => {
+          off = false;
+          window.clearTimeout(settleTimer);
+          settleTimer = null;
+          flame.src = LIT;
+          candle.classList.remove("is-out");
+          night.classList.remove("is-dim");
+          night.classList.remove("is-on");
+        };
+
+        const putOut = () => {
+          off = true;
+          flame.src = OUT;
+          candle.classList.add("is-out");
+          night.classList.remove("is-dim");
+          night.classList.add("is-on");
+          window.clearTimeout(settleTimer);
+          // Le noir complet laisse place à une veilleuse : la flamme reste
+          // éteinte, mais la page redevient lisible.
+          settleTimer = window.setTimeout(() => {
+            if (!off) return;
+            night.classList.remove("is-on");
+            night.classList.add("is-dim");
+          }, DARK_MS);
+        };
+
+        const toggle = () => (off ? relight() : putOut());
+
+        candle.addEventListener("click", toggle);
+        candle.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            toggle();
+          }
+        });
       })();
     </script>
 
