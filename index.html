@@ -223,7 +223,7 @@
 
       .sticker-button:hover,
       .sticker-spin:hover {
-        animation: sticker-spin 1.35s cubic-bezier(0.16, 0.72, 0.32, 1);
+        animation: sticker-spin 1.9s cubic-bezier(0.2, 0.7, 0.3, 1);
         z-index: 2;
       }
 
@@ -670,7 +670,7 @@
         <img class="sticker sticker-swing" src="stickers/miel.webp" width="409" height="520" alt="" decoding="async" data-size="0.8" />
         <img class="sticker sticker-spin" src="stickers/oeuf.webp" width="520" height="476" alt="" decoding="async" data-size="0.95" />
         <img class="sticker sticker-spin" src="stickers/pensee.webp" width="520" height="515" alt="" decoding="async" data-size="0.85" />
-        <img class="sticker" src="stickers/piece.webp" width="520" height="516" alt="" decoding="async" data-size="0.5" />
+        <img class="sticker sticker-spin" src="stickers/piece.webp" width="520" height="516" alt="" decoding="async" data-size="0.85" />
         <img class="sticker sticker-swing sticker-theiere" src="stickers/theiere.webp" width="464" height="306" alt="" decoding="async" data-size="0.95" role="button" tabindex="0" aria-label="Théière" />
         <img class="sticker sticker-swing sticker-timbre" src="stickers/timbre.webp" width="423" height="520" alt="" decoding="async" data-size="0.78" role="button" tabindex="0" aria-label="Timbre" />
         <img class="sticker sticker-spin" src="stickers/tournesol.webp" width="472" height="458" alt="" decoding="async" data-size="0.78" />
@@ -1048,12 +1048,24 @@
           };
 
           if (mobile) {
-            // Sur téléphone, on protège le logo et chaque étiquette séparément :
-            // les marges libres à gauche et à droite des boutons deviennent
-            // des places à prendre.
-            for (const el of [logo, ...labels]) {
-              const o = boxOf(el, 2);
-              if (o) obstacles.push(o);
+            // Sur téléphone, on protège le logo et toute la bande des papiers,
+            // bords compris : aucun objet ne vient se coller à gauche ou à
+            // droite des boutons.
+            const o = boxOf(logo, 4);
+            if (o) obstacles.push(o);
+            const rects = labels
+              .map((el) => el.getBoundingClientRect())
+              .filter((r) => r.width > 2 && r.height > 2);
+            if (rects.length) {
+              const top = Math.min(...rects.map((r) => r.top));
+              const bottom = Math.max(...rects.map((r) => r.bottom));
+              obstacles.push({
+                cx: W / 2,
+                cy: (top + bottom) / 2,
+                hw: W / 2,
+                hh: (bottom - top) / 2 + 6,
+                a: 0,
+              });
             }
           } else {
             const o = boxOf(hero, 22);
@@ -1062,33 +1074,6 @@
 
           const edge = mobile ? 4 : 12;
           const gap = mobile ? 6 : 14;
-
-          // Places réservées à gauche et à droite de chaque rangée
-          // d'étiquettes : quelques objets viennent s'y poser.
-          const labelRects = labels
-            .map((el) => el.getBoundingClientRect())
-            .filter((r) => r.width > 2 && r.height > 2);
-          const anchors = [];
-          if (mobile && labelRects.length) {
-            const rows = [];
-            for (const r of labelRects) {
-              const cy = (r.top + r.bottom) / 2;
-              const row = rows.find((x) => Math.abs(x.cy - cy) < 40);
-              if (row) {
-                row.top = Math.min(row.top, r.top);
-                row.bottom = Math.max(row.bottom, r.bottom);
-                row.left = Math.min(row.left, r.left);
-                row.right = Math.max(row.right, r.right);
-                row.cy = (row.top + row.bottom) / 2;
-              } else {
-                rows.push({ cy, top: r.top, bottom: r.bottom, left: r.left, right: r.right });
-              }
-            }
-            for (const row of rows) {
-              anchors.push({ x: (edge + row.left) / 2, y: row.cy, taken: false });
-              anchors.push({ x: (row.right + W - edge) / 2, y: row.cy, taken: false });
-            }
-          }
 
           const sig = [
             Math.round(W),
@@ -1153,28 +1138,6 @@
                 w *= 0.86;
                 h *= 0.86;
               }
-              if (round === 0 && anchors.length) {
-                for (const a of anchors) {
-                  if (a.taken) continue;
-                  const cand = {
-                    cx: a.x,
-                    cy: a.y,
-                    hw: w / 2 + gap / 2,
-                    hh: h / 2 + gap / 2,
-                    a: 0,
-                    rot: 0,
-                    score: Infinity,
-                  };
-                  if (a.x - cand.hw < edge - 1 || a.x + cand.hw > W - edge + 1) continue;
-                  if (a.y - cand.hh < edge - 1 || a.y + cand.hh > H - edge + 1) continue;
-                  if (boxes.some((b) => hits(cand, b))) continue;
-                  a.taken = true;
-                  spot = cand;
-                  break;
-                }
-                if (spot) continue;
-              }
-
               const candidates = [];
               for (let tryI = 0; tryI < 900 && candidates.length < 40; tryI++) {
                 const rot = upright
